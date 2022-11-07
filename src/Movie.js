@@ -9,7 +9,7 @@ import { Counter } from './Counter';
 import InfoIcon from '@mui/icons-material/Info';
 import {useNavigate} from "react-router-dom"
 
-export function Movie({ movie,id}) {
+export function Movie({ movie,id,deleteButton,editButton}) {
   const navigate=useNavigate();
   const [show, setShow] = useState(0);
   const styles = {
@@ -38,7 +38,7 @@ export function Movie({ movie,id}) {
         {show ? <p className="movie-summary">{movie.summary}</p> : null}
       </CardContent>
       <CardActions>
-        <Counter />
+        <Counter /> {deleteButton} { editButton}
       </CardActions>
     </Card>
   </>;

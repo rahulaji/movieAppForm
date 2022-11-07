@@ -1,18 +1,20 @@
 import './App.css';
 import {useEffect, useState} from 'react'
-import { Routes, Route,Navigate,useParams,useNavigate } from "react-router-dom";
+import { Routes, Route,Navigate,useNavigate } from "react-router-dom";
 import { MovieList } from './MovieList';
 import { Home } from './Home';
 import { Addmovie } from './Addmovie';
 import { NotFound } from './NotFound';
 import Button from '@mui/material/Button';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { MovieDetails } from './MovieDetails';
+import { useParams} from "react-router-dom";
+import { BasicForm } from './BasicForm';
 
 
 
@@ -51,6 +53,8 @@ useEffect(()=>{
           <Route path="/flims" element={<Navigate replace to ="/movies"/>} />
           <Route path="/movies" element={<MovieList movieList={movieList}/>} />
           <Route path="/movies/:id" element={<MovieDetails/>} />
+          <Route path="/movies/edit/:id" element={<EditMovie/>} />
+          <Route path="/basic-form" element={<BasicForm/>} />
           <Route path="/movies-add" element={<Addmovie movieList={movieList} setMovieList={setMovieList}/>} />
           <Route path="*" element={<NotFound />} />
       </Routes>
@@ -60,44 +64,13 @@ useEffect(()=>{
     </ThemeProvider>
   </>
 }
-function MovieDetails(){
-  const {id}=useParams();
-  //const movie=movieList[movieId]
-  const [movie,setMovie]=useState({});
-  useEffect(()=>{
-    fetch(`https://632161f782f8687273b0b151.mockapi.io/movies/${id}`)
-  .then((data)=>data.json())
-  .then((mv)=>setMovie(mv))
-  });
-  const styles = {
-    color: movie.rating >= 8.5 ? "green" : "red",
-  };
-  const navigate=useNavigate()
-  return<> 
-     <div>
-     <iframe 
-     width="100%"
-      height="700" 
-      src={movie.trailer} 
-      title="Ponniyin Selvan Teaser | #PS1 Tamil | Mani Ratnam | AR Rahman | Subaskaran | Madras Talkies" 
-      frameborder="0"
-       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-       allowfullscreen> 
-       </iframe>
-      <div className='movie-details-container'>
-        <div className='movie-specs'>
-          <h2 className='movie-name'>{movie.name}
-            
-          </h2>
-          <p style={styles} className='movie-rating'>⭐{movie.rating}</p>
-        </div>
-           <p className="movie-summary">{movie.summary}</p>
-           <Button  startIcon={<KeyboardBackspaceIcon/>} variant="contained" onClick={()=>navigate(-1)}>Back</Button>
-        </div>
-        </div>
-        
+function EditMovie(){
+   const {id}=useParams();
+  return<>
+      <h1>Hi im Rahul Editing Movie....{id}</h1> 
   </>
 }
 export default App;
 
 
+ 
